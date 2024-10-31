@@ -7,8 +7,8 @@ export default {
 	  console.log(JSON.stringify(env))
 	  const API_TOKEN = env.API_TOKEN;
 	  const ZONE_TAG = env.ZONE_TAG;
-	  const SENDER_EMAIL = "admin@zxc.co.in"; // Replace with your sender email
-	  const RECIPIENT_EMAIL = "ajays@cloudflare.com"; // Replace with your recipient email
+	  const SENDER_EMAIL = "admin@example.com"; // Replace with your sender email
+	  const RECIPIENT_EMAIL = "1@example2.com"; // Replace with your recipient email
   
 	  console.log("ZONE_TAG:", ZONE_TAG);
   
