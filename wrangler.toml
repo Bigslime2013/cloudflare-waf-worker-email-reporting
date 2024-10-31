@@ -9,8 +9,8 @@ compatibility_flags = ["nodejs_compat"]
 enabled = true
 
 [vars]
- API_TOKEN = "Wqnvu1IYl3EIUyw5ir6vN-TfsPo44tzEPSseH9Zv"
- ZONE_TAG  = "b58cebb2d5fd636f67c10aaf9371b20b"
+ API_TOKEN = "xx-x"
+ ZONE_TAG  = "xxx"
 
 
 # Cron Triggers
