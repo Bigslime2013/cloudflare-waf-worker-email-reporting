@@ -1,4 +1,4 @@
-- This worker allows you to send daily or weekly reports to your email
+- This worker allows you to send daily or weekly reports to your email (cron)
 - it uses email worker, cron , email routing and Graphql api
 
 
