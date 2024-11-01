@@ -98,7 +98,7 @@ export default {
 		};
 
 		try {
-			// Fetch data for all queries
+			// Fetch all
 			const clientIPData = await fetchQuery({
 				query: queryClientIP,
 				variables: {
@@ -123,7 +123,7 @@ export default {
 				}
 			});
 
-			// Extract events data
+			
 			const clientIPEvents = clientIPData.viewer.zones[0].firewallEventsAdaptiveGroups;
 			const userAgentEvents = userAgentData.viewer.zones[0].firewallEventsAdaptiveGroups;
 			const ja4Events = wafja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
@@ -234,7 +234,7 @@ export default {
 			msg.setSubject("Firewall Events Report");
 			msg.addMessage({
 				contentType: 'text/html',
-				data: htmlContent // Use HTML content
+				data: htmlContent 
 			});
 
 			const message = new EmailMessage(SENDER_EMAIL, RECIPIENT_EMAIL, msg.asRaw());
