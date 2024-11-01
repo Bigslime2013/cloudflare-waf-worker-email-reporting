@@ -11,7 +11,7 @@
 
 
 Query example:
-
+```
 query Viewer {
     viewer {
         budget
@@ -30,9 +30,9 @@ query Viewer {
         }
     }
 }
-
+```
 Available dimensions:
-
+```
 dimensions {
                     action
                     apiGatewayMatchedEndpoint
@@ -96,7 +96,7 @@ dimensions {
                     zoneVersion
                 }
 
-
+```
 **Reference: **
 
 https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
