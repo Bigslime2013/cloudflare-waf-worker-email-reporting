@@ -191,7 +191,7 @@ export default {
 				<h1>Firewall Events</h1>
 				<div class="table-container">
 					<div class="table-wrapper">
-						<h2>Top Client IP Requests</h2>
+						<h2>Top Client IP </h2>
 						<table>
 							<thead>
 								<tr>
@@ -210,7 +210,7 @@ export default {
 						</table>
 					</div>
 					<div class="table-wrapper">
-						<h2>Top User Agent Requests</h2>
+						<h2>Top User Agent </h2>
 						<table>
 							<thead>
 								<tr>
