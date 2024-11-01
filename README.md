@@ -99,7 +99,7 @@ dimensions {
 ```
 **Reference: **
 
-https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
-https://developers.cloudflare.com/analytics/graphql-api/
-https://www.npmjs.com/package/mimetext
-https://jldec.me/blog/routing-emails-through-a-cloudflare-worker
+- https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/
+- https://developers.cloudflare.com/analytics/graphql-api/
+- https://www.npmjs.com/package/mimetext
+- https://jldec.me/blog/routing-emails-through-a-cloudflare-worker
