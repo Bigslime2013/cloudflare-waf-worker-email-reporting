@@ -20,7 +20,7 @@ export default {
 		const today = new Date();
 		const formattedToday = today.toISOString().split('T')[0];
 
-		// Queries for client IP, user agent, and WAF Ja4
+		// Queries for client IP, user agent, and Bot Ja4
 		const queryClientIP = `
             query($zoneTag: String!, $formattedToday: String!) {
                 viewer {
