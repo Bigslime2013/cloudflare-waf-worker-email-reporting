@@ -137,30 +137,49 @@ export default {
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<title>Firewall Events</title>
 				<style>
-					body { font-family: Arial, sans-serif; margin: 20px; }
-					.table-container {
-						display: flex;
-						flex-direction: column;
-					}
-					table {
-						width: 100%;
-						border-collapse: collapse;
-						margin-bottom: 20px;
-						table-layout: fixed; /* Ensures equal column widths */
-					}
-					th, td {
-						padding: 8px;
-						text-align: left;
-						border: 1px solid #ddd;
-						word-wrap: break-word; /* Wraps long text */
-					}
-					th {
-						background-color: #f2f2f2;
-					}
-					.table-wrapper {
-						margin-bottom: 20px; /* Add space between tables */
-					}
-				</style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .table-container {
+            display: flex;
+            gap: 20px; /* Space between tables */
+        }
+        table {
+            border-collapse: collapse;
+            width: 200px;
+            background-color: #fdfdff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #cce7ff;
+            color: #333;
+            padding: 10px;
+        }
+        td {
+            background-color: #e8f0fe;
+            color: #333;
+            padding: 10px;
+        }
+        th, td {
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: #f0f8ff;
+        }
+    </style>
 			</head>
 			<body>
 				<h1>Firewall Events</h1>
