@@ -1,11 +1,8 @@
 - This worker allows you to send daily or weekly reports to your email (cron)
 - it uses email worker, cron , email routing and Graphql api
 - This is just a template, you can add any dimensions available in Graphql firewallEventsAdaptiveGroups based on customer requirement.
-
-
-
-1. Configure email routing : https://developers.cloudflare.com/email-routing/
-2. verify destination email : https://developers.cloudflare.com/email-routing/setup/email-routing-addresses/
+- Configure email routing : https://developers.cloudflare.com/email-routing/
+- verify destination email : https://developers.cloudflare.com/email-routing/setup/email-routing-addresses/
 
 
 
