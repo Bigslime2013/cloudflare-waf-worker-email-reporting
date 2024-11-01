@@ -1,27 +1,33 @@
-import { EmailMessage } from "cloudflare:email";
-import { createMimeMessage } from "mimetext";
+import {
+    EmailMessage
+} from "cloudflare:email";
+import {
+    createMimeMessage
+} from "mimetext";
 
 export default {
-	async scheduled(event, env) {
-		console.log(JSON.stringify(env));
+    async scheduled(event, env) {
+        console.log(JSON.stringify(env));
 
-		const API_TOKEN = env.API_TOKEN;
-		const ZONE_TAG = env.ZONE_TAG;
-		const SENDER_EMAIL = "admin@socteam.com"; // Replace with your sender email
-		const RECIPIENT_EMAIL = "alerts@socteam.com"; // Replace with your recipient email
+        const API_TOKEN = env.API_TOKEN;
+        const ZONE_TAG = env.ZONE_TAG;
+        const SENDER_EMAIL = "admin@socteam.com"; // Replace with your sender email
+        const RECIPIENT_EMAIL = "alerts@socteam.com"; // Replace with your recipient email
 
-		console.log("ZONE_TAG:", ZONE_TAG);
+        console.log("ZONE_TAG:", ZONE_TAG);
 
-		if (!ZONE_TAG) {
-			console.log("Error: ZONE_TAG is not set", { status: 400 });
-			return; // Exit if ZONE_TAG is not set
-		}
+        if (!ZONE_TAG) {
+            console.log("Error: ZONE_TAG is not set", {
+                status: 400
+            });
+            return; // Exit if ZONE_TAG is not set
+        }
 
-		const today = new Date();
-		const formattedToday = today.toISOString().split('T')[0];
+        const today = new Date();
+        const formattedToday = today.toISOString().split('T')[0];
 
-		// Queries for client IP, user agent, and Bot Ja4
-		const queryClientIP = `
+        // Queries for client IP, user agent, and Bot Ja4
+        const queryClientIP = `
             query($zoneTag: String!, $formattedToday: String!) {
                 viewer {
                     zones(filter: { zoneTag: $zoneTag }) {
@@ -39,7 +45,7 @@ export default {
                 }
             }`;
 
-		const queryUserAgent = `
+        const queryUserAgent = `
             query($zoneTag: String!, $formattedToday: String!) {
                 viewer {
                     zones(filter: { zoneTag: $zoneTag }) {
@@ -57,7 +63,7 @@ export default {
                 }
             }`;
 
-		const queryJa4 = `
+        const queryJa4 = `
             query($zoneTag: String!, $formattedToday: String!) {
                 viewer {
                     zones(filter: { zoneTag: $zoneTag }) {
@@ -75,61 +81,61 @@ export default {
                 }
             }`;
 
-		const fetchQuery = async (payload) => {
-			const response = await fetch('https://api.cloudflare.com/client/v4/graphql', {
-				method: 'POST',
-				headers: {
-					'Authorization': `Bearer ${API_TOKEN}`,
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(payload)
-			});
-			const result = await response.json();
+        const fetchQuery = async (payload) => {
+            const response = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${API_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
 
-			// Log the response for debugging
-			console.log("Fetched Data:", result);
+            // Log the response for debugging
+            console.log("Fetched Data:", result);
 
-			if (!result.data || result.errors) {
-				console.error("GraphQL API error:", result.errors || "No data returned");
-				throw new Error("Error fetching data from Cloudflare GraphQL API.");
-			}
+            if (!result.data || result.errors) {
+                console.error("GraphQL API error:", result.errors || "No data returned");
+                throw new Error("Error fetching data from Cloudflare GraphQL API.");
+            }
 
-			return result.data;
-		};
+            return result.data;
+        };
 
-		try {
-			// Fetch all
-			const clientIPData = await fetchQuery({
-				query: queryClientIP,
-				variables: {
-					zoneTag: ZONE_TAG,
-					formattedToday: formattedToday,
-				}
-			});
+        try {
+            // Fetch all
+            const clientIPData = await fetchQuery({
+                query: queryClientIP,
+                variables: {
+                    zoneTag: ZONE_TAG,
+                    formattedToday: formattedToday,
+                }
+            });
 
-			const userAgentData = await fetchQuery({
-				query: queryUserAgent,
-				variables: {
-					zoneTag: ZONE_TAG,
-					formattedToday: formattedToday,
-				}
-			});
+            const userAgentData = await fetchQuery({
+                query: queryUserAgent,
+                variables: {
+                    zoneTag: ZONE_TAG,
+                    formattedToday: formattedToday,
+                }
+            });
 
-			const wafja4Data = await fetchQuery({
-				query: queryJa4,
-				variables: {
-					zoneTag: ZONE_TAG,
-					formattedToday: formattedToday,
-				}
-			});
+            const wafja4Data = await fetchQuery({
+                query: queryJa4,
+                variables: {
+                    zoneTag: ZONE_TAG,
+                    formattedToday: formattedToday,
+                }
+            });
 
-			
-			const clientIPEvents = clientIPData.viewer.zones[0].firewallEventsAdaptiveGroups;
-			const userAgentEvents = userAgentData.viewer.zones[0].firewallEventsAdaptiveGroups;
-			const ja4Events = wafja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
 
-			// Generate HTML content from JSON data
-			const htmlContent = `
+            const clientIPEvents = clientIPData.viewer.zones[0].firewallEventsAdaptiveGroups;
+            const userAgentEvents = userAgentData.viewer.zones[0].firewallEventsAdaptiveGroups;
+            const ja4Events = wafja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
+
+            // Generate HTML content from JSON data
+            const htmlContent = `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
@@ -246,26 +252,31 @@ export default {
 			</html>
 			`;
 
-			// Create and send the email
-			const msg = createMimeMessage();
-			msg.setSender({ name: "Cloudflare Worker", addr: SENDER_EMAIL });
-			msg.setRecipient(RECIPIENT_EMAIL);
-			msg.setSubject("Firewall Events Report");
-			msg.addMessage({
-				contentType: 'text/html',
-				data: htmlContent 
-			});
+            // Create and send the email
+            const msg = createMimeMessage();
+            msg.setSender({
+                name: "Cloudflare Worker",
+                addr: SENDER_EMAIL
+            });
+            msg.setRecipient(RECIPIENT_EMAIL);
+            msg.setSubject("Firewall Events Report");
+            msg.addMessage({
+                contentType: 'text/html',
+                data: htmlContent
+            });
 
-			const message = new EmailMessage(SENDER_EMAIL, RECIPIENT_EMAIL, msg.asRaw());
+            const message = new EmailMessage(SENDER_EMAIL, RECIPIENT_EMAIL, msg.asRaw());
 
-			try {
-				await env.SEND_EMAIL.send(message);
-				console.log("Email sent successfully!");
-			} catch (e) {
-				console.error(`Error sending email: ${e.message}`, { status: 500 });
-			}
-		} catch (error) {
-			console.error("Error processing the scheduled event:", error);
-		}
-	}
+            try {
+                await env.SEND_EMAIL.send(message);
+                console.log("Email sent successfully!");
+            } catch (e) {
+                console.error(`Error sending email: ${e.message}`, {
+                    status: 500
+                });
+            }
+        } catch (error) {
+            console.error("Error processing the scheduled event:", error);
+        }
+    }
 };
