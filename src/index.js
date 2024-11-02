@@ -135,7 +135,7 @@ export default {
             const ja4Events = ja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
 
             // Generate HTML content from JSON data
-            			const htmlContent = `
+            const htmlContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
