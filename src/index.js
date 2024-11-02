@@ -1,9 +1,5 @@
-import {
-    EmailMessage
-} from "cloudflare:email";
-import {
-    createMimeMessage
-} from "mimetext";
+import {EmailMessage} from "cloudflare:email";
+import {createMimeMessage} from "mimetext";
 
 export default {
     async scheduled(event, env) {
