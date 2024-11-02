@@ -135,14 +135,14 @@ export default {
             const ja4Events = ja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
 
             // Generate HTML content from JSON data
-            const htmlContent = `
-			<!DOCTYPE html>
-			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Firewall Events</title>
-				<style>
+            			const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firewall Events</title>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -150,12 +150,21 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             min-height: 100vh;
             margin: 0;
         }
+        .logo {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .logo img {
+            max-width: 150px;
+            height: auto;
+        }
         .table-container {
             display: flex;
-            gap: 20px; /* Space between tables */
+            gap: 20px;
         }
         table {
             border-collapse: collapse;
@@ -186,71 +195,75 @@ export default {
             background-color: #f0f8ff;
         }
     </style>
-			</head>
-			<body>
-				<h1>Firewall Events</h1>
-				<div class="table-container">
-					<div class="table-wrapper">
-						<h2>Top Client IP </h2>
-						<table>
-							<thead>
-								<tr>
-									<th>Client IP</th>
-									<th>Requests</th>
-								</tr>
-							</thead>
-							<tbody>
-								${clientIPEvents.map(event => `
-									<tr>
-										<td>${event.dimensions.clientIP}</td>
-										<td>${event.count}</td>
-									</tr>
-								`).join('')}
-							</tbody>
-						</table>
-					</div>
-					<div class="table-wrapper">
-						<h2>Top User Agent </h2>
-						<table>
-							<thead>
-								<tr>
-									<th>User Agent</th>
-									<th>Requests</th>
-								</tr>
-							</thead>
-							<tbody>
-								${userAgentEvents.map(event => `
-									<tr>
-										<td>${event.dimensions.userAgent}</td>
-										<td>${event.count}</td>
-									</tr>
-								`).join('')}
-							</tbody>
-						</table>
-					</div>
-					<div class="table-wrapper">
-						<h2>Top JA4s</h2>
-						<table>
-							<thead>
-								<tr>
-									<th>Description</th>
-									<th>Count</th>
-								</tr>
-							</thead>
-							<tbody>
-								${ja4Events.map(event => `
-									<tr>
-										<td>${event.dimensions.ja4}</td>
-										<td>${event.count}</td>
-									</tr>
-								`).join('')}
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</body>
-			</html>
-			`;
+</head>
+<body>
+    <div class="logo">
+        <img src="https://ci3.googleusercontent.com/meips/ADKq_NYVtKRyxguKJAIaxdiKHJwyPNyVcc76F_yEB6TNKJ34md3Q17nrKP3GRlU1_WoO73MTHOcK1E_wy7gwjwGPv3Mjyi_SlFOziEocJtO-zxngnvfvV49kFVwmvrlXjxjopypb=s0-d-e1-ft#http://info.cloudflare.com/rs/713-XSC-918/images/logo_fullcolor_1168x168.png" alt="Cloudflare Logo" style="border-style:none">
+    </div>
+    <h1>Firewall Events</h1>
+    <div class="table-container">
+        <div class="table-wrapper">
+            <h2>Top Client IP</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client IP</th>
+                        <th>Requests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${clientIPEvents.map(event => `
+                        <tr>
+                            <td>${event.dimensions.clientIP}</td>
+                            <td>${event.count}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-wrapper">
+            <h2>Top User Agent</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>User Agent</th>
+                        <th>Requests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${userAgentEvents.map(event => `
+                        <tr>
+                            <td>${event.dimensions.userAgent}</td>
+                            <td>${event.count}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-wrapper">
+            <h2>Top JA4s</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>JA4</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${ja4Events.map(event => `
+                        <tr>
+                            <td>${event.dimensions.ja4}</td>
+                            <td>${event.count}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+`;
+
 
             // Create and send the email
             const msg = createMimeMessage();
