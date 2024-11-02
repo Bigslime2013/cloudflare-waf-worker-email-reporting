@@ -121,7 +121,7 @@ export default {
                 }
             });
 
-            const wafja4Data = await fetchQuery({
+            const ja4Data = await fetchQuery({
                 query: queryJa4,
                 variables: {
                     zoneTag: ZONE_TAG,
@@ -132,7 +132,7 @@ export default {
 
             const clientIPEvents = clientIPData.viewer.zones[0].firewallEventsAdaptiveGroups;
             const userAgentEvents = userAgentData.viewer.zones[0].firewallEventsAdaptiveGroups;
-            const ja4Events = wafja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
+            const ja4Events = ja4Data.viewer.zones[0].firewallEventsAdaptiveGroups;
 
             // Generate HTML content from JSON data
             const htmlContent = `
