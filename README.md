@@ -1,4 +1,4 @@
-- This worker allows you to send daily or weekly reports to your email (update [cron](https://developers.cloudflare.com/workers/configuration/cron-triggers/#examples) and [graphql filter](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/) accordingly)
+- This worker allows you to send Cloudflare WAF/security daily or weekly reports to your email (update [cron](https://developers.cloudflare.com/workers/configuration/cron-triggers/#examples) and [graphql filter](https://developers.cloudflare.com/analytics/graphql-api/features/filtering/) accordingly)
 - it uses email worker, cron , email routing and Graphql api
 - This is just a template, you can add any dimensions available in Graphql firewallEventsAdaptiveGroups based on customer requirement.
 - Email routing will work only on full setup. You can create a subdomain zone (LTZ) as workaround
